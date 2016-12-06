@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"google.golang.org/api/compute/v1"
 	"google.golang.org/api/googleapi"
 )
 
@@ -74,6 +73,27 @@ func resourceComputeInstance() *schema.Resource {
 						"device_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+						},
+						"diskEncryptionKey": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							ForceNew: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"rawKey": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"rsaEncryptedKey": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"sha256": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
